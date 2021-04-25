@@ -36,7 +36,6 @@ public class Znake extends JFrame {
         this.getContentPane().add(imagenSnake);
 
         setSize(width,height);
-        //setLayout(null);
 
         this.addKeyListener(new Teclas());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,6 +87,33 @@ public class Znake extends JFrame {
         }
 
     }
+    public void generarCactus() {
+        Random rnd = new Random();
+
+        cactus.x = (rnd.nextInt(width));
+        if((cactus.x % 20) > 0) {
+            cactus.x = cactus.x - (cactus.x % 20);
+        }
+
+        if(cactus.x < 20) {
+            cactus.x = cactus.x + 20;
+        }
+        if(cactus.x > width) {
+            cactus.x = cactus.x - 20;
+        }
+
+        cactus.y = (rnd.nextInt(height));
+        if((cactus.y % 40) > 0) {
+            cactus.y = cactus.y - (cactus.y % 40);
+        }
+
+        if(cactus.y > height) {
+            cactus.y = cactus.y - 40;
+        }
+        if(cactus.y < 0) {
+            cactus.y = cactus.y + 40;
+        }
+    }
 
     public void actualizar() {
 
@@ -105,6 +131,7 @@ public class Znake extends JFrame {
             colaSnake.add(0,new Point(snake.x,snake.y));
             System.out.println(colaSnake.size());
             generarComida();
+            generarCactus();
         }
 
         if((snake.x > (cactus.x-20) && snake.x < (cactus.x+20)) && (snake.y > (cactus.y-40) && snake.y < (cactus.y+40))) {
@@ -122,7 +149,7 @@ public class Znake extends JFrame {
 
             if(gameOver) {
 
-        
+
             } else {
 
                 Image fondo = new ImageIcon(getClass().getResource("/images/background.jpg")).getImage();
@@ -140,8 +167,14 @@ public class Znake extends JFrame {
 
             g.setColor(new Color(172, 7, 7));
 
+
             Image manzana = new ImageIcon(getClass().getResource("/images/manzana snake.png")).getImage();
             g.drawImage(manzana, comida.x,comida.y, 20, 20, this);
+
+            Image cactusimg = new ImageIcon(getClass().getResource("/images/cactus.png")).getImage();
+            g.drawImage(cactusimg, cactus.x,cactus.y, 20, 40, this);
+
+           
 
             if(gameOver) {
 
